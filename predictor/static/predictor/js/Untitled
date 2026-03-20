@@ -1,0 +1,225 @@
+// ═══════════════════════════════════════════════
+// NAVBAR SCROLL EFFECT
+// ═══════════════════════════════════════════════
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+
+  // Update active nav link
+  const sections = ['home', 'try', 'upcoming', 'contact'];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    const link = document.querySelector(`.nav-btn[href="#${id}"]`);
+    if (!el || !link) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= 100 && rect.bottom >= 100) {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      link.classList.add('active');
+    }
+  });
+});
+
+// ═══════════════════════════════════════════════
+// COUNTER ANIMATION
+// ═══════════════════════════════════════════════
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const duration = 1500;
+  const step = target / (duration / 16);
+  let current = 0;
+
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+    el.textContent = Math.floor(current);
+  }, 16);
+}
+
+// Start counters when hero is visible
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.stat-num').forEach(animateCounter);
+      statsObserver.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+
+const statsEl = document.querySelector('.hero-stats');
+if (statsEl) statsObserver.observe(statsEl);
+
+// ═══════════════════════════════════════════════
+// SCROLL REVEAL
+// ═══════════════════════════════════════════════
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.upcoming-card, .contact-item, .feature-card').forEach(el => {
+  el.classList.add('reveal');
+  revealObserver.observe(el);
+});
+
+// ═══════════════════════════════════════════════
+// SYMPTOM SEARCH & SELECTION
+// ═══════════════════════════════════════════════
+const searchInput = document.getElementById('symptomSearch');
+const searchClear = document.getElementById('searchClear');
+const symptomChips = document.querySelectorAll('.symptom-chip');
+const selectedTags = document.getElementById('selectedTags');
+const selectedCount = document.getElementById('selectedCount');
+const diagnoseBtn = document.getElementById('diagnoseBtn');
+
+let selectedSymptoms = new Set();
+
+// Search filter
+if (searchInput) {
+  searchInput.addEventListener('input', function () {
+    const query = this.value.toLowerCase().trim();
+    searchClear.style.display = query ? 'block' : 'none';
+
+    symptomChips.forEach(chip => {
+      const text = chip.dataset.symptom.toLowerCase().replace(/_/g, ' ');
+      chip.classList.toggle('hidden', query && !text.includes(query));
+    });
+  });
+}
+
+if (searchClear) {
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchClear.style.display = 'none';
+    symptomChips.forEach(c => c.classList.remove('hidden'));
+    searchInput.focus();
+  });
+}
+
+// Chip selection
+symptomChips.forEach(chip => {
+  chip.addEventListener('click', function () {
+    const checkbox = this.querySelector('input[type="checkbox"]');
+    const symptom = this.dataset.symptom;
+    const displayName = symptom.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+    checkbox.checked = !checkbox.checked;
+    this.classList.toggle('selected', checkbox.checked);
+
+    // Update chip icon
+    const icon = this.querySelector('.chip-icon');
+    icon.textContent = checkbox.checked ? '✓' : '+';
+
+    if (checkbox.checked) {
+      selectedSymptoms.add(symptom);
+    } else {
+      selectedSymptoms.delete(symptom);
+    }
+
+    updateSelectedTags();
+    updateDiagnoseBtn();
+  });
+});
+
+function updateSelectedTags() {
+  const tagsContainer = document.getElementById('selectedTags');
+  tagsContainer.innerHTML = '<span class="tags-label">Selected: </span>';
+
+  if (selectedSymptoms.size === 0) {
+    tagsContainer.innerHTML += '<span class="no-tags">None selected yet</span>';
+  } else {
+    selectedSymptoms.forEach(symptom => {
+      const displayName = symptom.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+      const tag = document.createElement('span');
+      tag.className = 'tag-pill';
+      tag.innerHTML = `${displayName} ✕`;
+      tag.addEventListener('click', () => {
+        selectedSymptoms.delete(symptom);
+        // Uncheck corresponding chip
+        const chip = document.querySelector(`.symptom-chip[data-symptom="${symptom}"]`);
+        if (chip) {
+          chip.classList.remove('selected');
+          chip.querySelector('input').checked = false;
+          chip.querySelector('.chip-icon').textContent = '+';
+        }
+        updateSelectedTags();
+        updateDiagnoseBtn();
+      });
+      tagsContainer.appendChild(tag);
+    });
+  }
+}
+
+function updateDiagnoseBtn() {
+  const count = selectedSymptoms.size;
+  selectedCount.textContent = `${count} symptom${count !== 1 ? 's' : ''} selected`;
+  diagnoseBtn.disabled = count === 0;
+}
+
+// Form submit animation
+const diagnosisForm = document.getElementById('diagnosisForm');
+if (diagnosisForm) {
+  diagnosisForm.addEventListener('submit', function () {
+    const btnText = diagnoseBtn.querySelector('.btn-text');
+    const btnLoader = diagnoseBtn.querySelector('.btn-loader');
+    if (btnText && btnLoader) {
+      btnText.style.display = 'none';
+      btnLoader.style.display = 'inline';
+    }
+    diagnoseBtn.disabled = true;
+  });
+}
+
+// ═══════════════════════════════════════════════
+// CONTACT FORM
+// ═══════════════════════════════════════════════
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const btn = this.querySelector('button[type="submit"]');
+    btn.innerHTML = '<span>✓ Message Sent!</span>';
+    btn.style.background = '#22c55e';
+    setTimeout(() => {
+      btn.innerHTML = '<span>Send Message</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
+      btn.style.background = '';
+      this.reset();
+    }, 3000);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// SMOOTH SCROLL TO RESULT IF EXISTS
+// ═══════════════════════════════════════════════
+const resultSection = document.getElementById('resultSection');
+if (resultSection) {
+  setTimeout(() => {
+    resultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 500);
+}
+
+// ═══════════════════════════════════════════════
+// HAMBURGER MENU
+// ═══════════════════════════════════════════════
+const hamburger = document.getElementById('hamburger');
+if (hamburger) {
+  hamburger.addEventListener('click', () => {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    navLinks.style.flexDirection = 'column';
+    navLinks.style.position = 'absolute';
+    navLinks.style.top = '70px';
+    navLinks.style.left = '0';
+    navLinks.style.right = '0';
+    navLinks.style.background = 'rgba(15,17,23,0.98)';
+    navLinks.style.padding = '20px';
+    navLinks.style.gap = '12px';
+  });
+}

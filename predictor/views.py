@@ -48,4 +48,20 @@ def index(request):
         'result': result,
         'description': description,
         'precautions': precautions
-    })# Create your views here.
+    })
+    from django.core.mail import send_mail
+from django.http import JsonResponse
+
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        message = request.POST.get('message', '')
+        send_mail(
+            subject=f'MediTriage Message from {name}',
+            message=f'Name: {name}\nEmail: {email}\n\nMessage:\n{message}',
+            from_email='sagarkumarj446@gmail.com',
+            recipient_list=['sagarkumarj446@gmail.com'],
+        )
+        return JsonResponse({'status': 'ok'})
+    return JsonResponse({'status': 'error'})# Create your views here.
