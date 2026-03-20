@@ -1,0 +1,131 @@
+# 🏥 MediTriage — AI-Powered Symptom Severity Checker
+
+> Built for CODE 1 Hackathon | Track: Rapid Response Racing | Organized by Collazon
+
+---
+
+## 📌 What is MediTriage?
+
+MediTriage is an AI-powered web application that allows users to select their symptoms and instantly receive a predicted disease diagnosis along with recommended precautions. It is designed to improve healthcare accessibility and assist in early-stage triage.
+
+---
+
+## 🚀 Features
+
+- Select multiple symptoms from a searchable list
+- AI model predicts the most likely disease
+- Displays disease description and recommended precautions
+- Clean, dark-themed responsive UI
+- Fast and lightweight — runs locally
+
+---
+
+## 🧠 How It Works
+
+```
+User selects symptoms
+        ↓
+Django backend receives form data
+        ↓
+Sklearn RandomForest model predicts disease
+        ↓
+App fetches description + precautions from CSV
+        ↓
+Result displayed on screen
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| ML Model | Python, Scikit-learn (RandomForestClassifier) |
+| Backend | Django 6.0 |
+| Frontend | HTML, CSS (custom dark theme) |
+| Data | Kaggle Disease-Symptom Dataset |
+| Model Export | Joblib |
+
+---
+
+## 📁 Project Structure
+
+```
+meditriage/
+├── core/                  # Django project settings
+│   ├── settings.py
+│   └── urls.py
+├── predictor/             # Main app
+│   ├── views.py           # ML model logic + routing
+│   ├── urls.py
+│   └── templates/
+│       └── predictor/
+│           └── index.html # Frontend UI
+├── disease_model.pkl      # Trained ML model
+├── symptoms_list.json     # All unique symptoms
+├── dataset.csv            # Training data
+├── symptom_Description.csv
+├── symptom_precaution.csv
+├── Symptom-severity.csv
+└── manage.py
+```
+
+---
+
+## ⚙️ Setup & Installation
+
+### Prerequisites
+- Python 3.x
+- pip
+
+### Steps
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/yourusername/meditriage.git
+cd meditriage
+
+# 2. Install dependencies
+pip install django scikit-learn joblib pandas
+
+# 3. Run the server
+python3 manage.py runserver
+
+# 4. Open in browser
+http://127.0.0.1:8000
+```
+
+---
+
+## 📊 Model Details
+
+| Property | Value |
+|----------|-------|
+| Algorithm | Random Forest Classifier |
+| Training Samples | 4920 |
+| Features | 17 symptoms |
+| Classes | 41 diseases |
+| Accuracy | 100% (test set) |
+| Dataset Source | Kaggle — itachi9604 |
+
+---
+
+## 🔮 Future Scope
+
+- Severity scoring (Low / Medium / Critical) using symptom weights
+- Nearest hospital suggestion based on location
+- Mobile app version
+- Multi-language support for rural accessibility
+- Integration with emergency response systems
+
+---
+
+## 👥 Team
+
+Built for CODE 1 Hackathon — Team MediTriage
+
+---
+
+## ⚠️ Disclaimer
+
+MediTriage is a prototype built for educational and hackathon purposes. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider.
