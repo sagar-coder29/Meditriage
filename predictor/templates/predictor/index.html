@@ -12,7 +12,10 @@
         .header p { opacity: 0.85; margin-top: 5px; }
         .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
         .card { background: #1e2130; border-radius: 12px; padding: 30px; margin-bottom: 20px; }
-        h2 { color: #e63946; margin-bottom: 20px; font-size: 1.2rem; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        h2 { color: #e63946; font-size: 1.2rem; }
+        #symptomSearch { padding: 8px 14px; border-radius: 8px; border: 1px solid #e63946; background: #0f1117; color: #fff; font-size: 0.9rem; width: 220px; outline: none; }
+        #symptomSearch::placeholder { color: #888; }
         .symptom-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-height: 300px; overflow-y: auto; }
         .symptom-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
         .symptom-item input { accent-color: #e63946; width: 16px; height: 16px; }
@@ -25,7 +28,6 @@
         .precautions ul { list-style: none; }
         .precautions ul li { padding: 8px 0; border-bottom: 1px solid #2e3244; color: #aaa; }
         .precautions ul li::before { content: "✓ "; color: #e63946; font-weight: bold; }
-        #symptomSearch::placeholder { color: #888; }
     </style>
 </head>
 <body>
@@ -36,10 +38,9 @@
 
     <div class="container">
         <div class="card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h2 style="margin:0;">SELECT YOUR SYMPTOMS</h2>
-                <input type="text" id="symptomSearch" placeholder="🔍 Search symptom..." 
-                style="padding:8px 14px; border-radius:8px; border:1px solid #e63946; background:#0f1117; color:#fff; font-size:0.9rem; width:220px; outline:none;">
+            <div class="card-header">
+                <h2>SELECT YOUR SYMPTOMS</h2>
+                <input type="text" id="symptomSearch" placeholder="🔍 Search symptom...">
             </div>
             <form method="POST">
                 {% csrf_token %}
@@ -74,6 +75,7 @@
         </div>
         {% endif %}
     </div>
+
     <script>
         document.getElementById('symptomSearch').addEventListener('input', function() {
             const query = this.value.toLowerCase();
@@ -82,6 +84,7 @@
                 item.style.display = label.includes(query) ? 'flex' : 'none';
             });
         });
-        </script>
+    </script>
 </body>
 </html>
+
