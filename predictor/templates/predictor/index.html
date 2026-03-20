@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTriage - AI Symptom Checker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0f1117; color: #fff; min-height: 100vh; }
+        .header { background: #e63946; padding: 20px 40px; text-align: center; }
+        .header h1 { font-size: 2rem; letter-spacing: 2px; }
+        .header p { opacity: 0.85; margin-top: 5px; }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .card { background: #1e2130; border-radius: 12px; padding: 30px; margin-bottom: 20px; }
+        h2 { color: #e63946; margin-bottom: 20px; font-size: 1.2rem; }
+        .symptom-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-height: 300px; overflow-y: auto; }
+        .symptom-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
+        .symptom-item input { accent-color: #e63946; width: 16px; height: 16px; }
+        .btn { background: #e63946; color: white; border: none; padding: 14px 40px; border-radius: 8px; font-size: 1rem; cursor: pointer; width: 100%; margin-top: 20px; font-weight: bold; letter-spacing: 1px; }
+        .btn:hover { background: #c1121f; }
+        .result-card { background: #1e2130; border-radius: 12px; padding: 30px; border-left: 4px solid #e63946; }
+        .disease-name { font-size: 1.8rem; color: #e63946; font-weight: bold; margin-bottom: 15px; }
+        .description { color: #ccc; line-height: 1.7; margin-bottom: 20px; }
+        .precautions h3 { color: #fff; margin-bottom: 10px; }
+        .precautions ul { list-style: none; }
+        .precautions ul li { padding: 8px 0; border-bottom: 1px solid #2e3244; color: #aaa; }
+        .precautions ul li::before { content: "✓ "; color: #e63946; font-weight: bold; }
+        #symptomSearch::placeholder { color: #888; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏥 MEDITRIAGE</h1>
+        <p>AI-Powered Symptom Severity Checker</p>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 style="margin:0;">SELECT YOUR SYMPTOMS</h2>
+                <input type="text" id="symptomSearch" placeholder="🔍 Search symptom..." 
+                style="padding:8px 14px; border-radius:8px; border:1px solid #e63946; background:#0f1117; color:#fff; font-size:0.9rem; width:220px; outline:none;">
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="symptom-grid">
+                    {% for symptom in symptoms_list %}
+                    <label class="symptom-item">
+                        <input type="checkbox" name="symptoms" value="{{ symptom }}">
+                        {{ symptom|title|cut:"_" }}
+                    </label>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn">DIAGNOSE NOW</button>
+            </form>
+        </div>
+
+        {% if result %}
+        <div class="result-card">
+            <div class="disease-name">{{ result }}</div>
+            {% if description %}
+            <p class="description">{{ description }}</p>
+            {% endif %}
+            {% if precautions %}
+            <div class="precautions">
+                <h3>Recommended Precautions:</h3>
+                <ul>
+                    {% for p in precautions %}
+                    <li>{{ p }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        document.getElementById('symptomSearch').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            document.querySelectorAll('.symptom-item').forEach(function(item) {
+                const label = item.textContent.toLowerCase();
+                item.style.display = label.includes(query) ? 'flex' : 'none';
+            });
+        });
+        </script>
+</body>
+</html>
