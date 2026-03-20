@@ -57,7 +57,7 @@ def contact(request):
         name = request.POST.get('name', '')
         email = request.POST.get('email', '')
         message = request.POST.get('message', '')
-        send_mail(
+        send_mail(  # pyright: ignore[reportUndefinedVariable]
             subject=f'MediTriage Message from {name}',
             message=f'Name: {name}\nEmail: {email}\n\nMessage:\n{message}',
             from_email='sagarkumarj446@gmail.com',
