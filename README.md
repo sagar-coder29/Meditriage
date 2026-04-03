@@ -452,9 +452,6 @@ This project was created for **educational purposes** as part of a hackathon. Se
 - **Kaggle** — For the disease-symptom dataset
 - **Scikit-learn** — For the machine learning framework
 - **Django** — For the web framework
-- **Collazon** — For organizing CODE 1 Hackathon
-- **ADGIPS** — For supporting student projects
-
 ---
 
 <div align="center">
