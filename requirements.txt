@@ -1,0 +1,34 @@
+# MediTriage - AI-Powered Symptom Checker
+# Requirements for Python 3.9+
+
+# Django Framework
+Django>=5.0,<7.0
+
+# Machine Learning
+scikit-learn>=1.3.0
+joblib>=1.3.0
+
+# Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Database (included with Django, but listed for clarity)
+# sqlite3 is built into Python
+
+# Optional: For development
+# black>=23.0.0          # Code formatter
+# flake8>=6.0.0          # Linter
+# pytest>=7.0.0          # Testing
+# pytest-django>=4.5.0    # Django testing
+
+# Optional: For production deployment
+# gunicorn>=21.0.0       # Production server
+# whitenoise>=6.0.0      # Static file serving
+
+# Optional: For image/visualization
+# matplotlib>=3.7.0      # Plotting
+# seaborn>=0.12.0        # Statistical visualization
+
+# Optional: For API development
+# djangorestframework>=3.14.0  # REST API
+# django-cors-headers>=4.0.0   # CORS support
