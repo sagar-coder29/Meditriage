@@ -1,7 +1,5 @@
 # 🏥 MediTriage — AI-Powered Symptom Severity Checker
 
-> **Built for CODE 1 Hackathon** | 🏁 Track: Rapid Response Racing | 🎯 Organized by Collazon
-
 ---
 
 ## 📸 Screenshots
