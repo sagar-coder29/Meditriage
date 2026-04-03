@@ -5,24 +5,24 @@
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home Page](images/home.png)
+![Home Page](screenshots/home.png)
 *Modern dark-themed interface featuring an animated hero section with floating medical icons, pulsing rings, and smooth counter animations. The statistics dashboard showcases disease coverage, symptom count, accuracy rate, and response time.*
 
 ### 🔍 Symptom Selection
-![Symptom Selection](images/symptoms.png)
+![Symptom Selection](screenshots/symptoms.png)
 *Intuitive searchable symptom grid with real-time filtering. Features multi-select capability, visual selection feedback with animated checkmarks, and a dynamic tag system showing selected symptoms.*
 
 ### 📊 Diagnosis Result
-![Diagnosis Result](images/result.png)
+![Diagnosis Result](screenshots/result.png)
 *AI-powered diagnosis displaying the predicted disease with a confidence badge, detailed condition description, and numbered precaution cards with hover effects.*
 
 ### 📬 Contact Section
-![Contact Form](images/contact.png)
+![Contact Form](screenshots/contact.png)
 *Get in touch with the team. Features contact information cards with hover animations and a fully functional contact form with email integration.*
 
-### 📱 Mobile Responsive
-![Mobile View](images/mobile.png)
-*Fully responsive design that adapts seamlessly to mobile devices, tablets, and desktops with optimized touch interactions.*
+### 🚀 Upcoming Features
+![Upcoming Features](screenshots/upcoming.png)
+*Roadmap for future features including Medical Report Reader, Hospital Finder, Emergency Alerts, Voice Input, Mobile App, and Regional Languages.*
 
 ---
 
