@@ -8,22 +8,6 @@
 ![Home Page](screenshots/home.png)
 *Modern dark-themed interface featuring an animated hero section with floating medical icons, pulsing rings, and smooth counter animations. The statistics dashboard showcases disease coverage, symptom count, accuracy rate, and response time.*
 
-### 🔍 Symptom Selection
-![Symptom Selection](screenshots/symptoms.png)
-*Intuitive searchable symptom grid with real-time filtering. Features multi-select capability, visual selection feedback with animated checkmarks, and a dynamic tag system showing selected symptoms.*
-
-### 📊 Diagnosis Result
-![Diagnosis Result](screenshots/result.png)
-*AI-powered diagnosis displaying the predicted disease with a confidence badge, detailed condition description, and numbered precaution cards with hover effects.*
-
-### 📬 Contact Section
-![Contact Form](screenshots/contact.png)
-*Get in touch with the team. Features contact information cards with hover animations and a fully functional contact form with email integration.*
-
-### 🚀 Upcoming Features
-![Upcoming Features](screenshots/upcoming.png)
-*Roadmap for future features including Medical Report Reader, Hospital Finder, Emergency Alerts, Voice Input, Mobile App, and Regional Languages.*
-
 ---
 
 ## 🎯 What is MediTriage?
